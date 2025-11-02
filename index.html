@@ -3,72 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <title>Italiana Sorvetes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      color: #333;
-    }
-    header {
-      background: #e74c3c;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    header img {
-      max-width: 150px;
-      margin-bottom: 10px;
-    }
-    .catalogo {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 30px;
-      gap: 20px;
-    }
-    .produto {
-      background: #f9f9f9;
-      border: 2px solid #2ecc71;
-      border-radius: 10px;
-      padding: 20px;
-      width: 300px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .produto img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .produto h3 {
-      margin-top: 15px;
-      color: #e74c3c;
-    }
-    .produto p {
-      font-size: 14px;
-      margin: 5px 0;
-    }
-    label, select, input {
-      display: block;
-      width: 100%;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    select, input {
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px;
-      background: #2ecc71;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+   body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #333;
+}
+
+header {
+  background: #e74c3c;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+header img {
+  max-width: 150px;
+  margin-bottom: 10px;
+}
+
+.catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 20px;
+}
+
+.produto {
+  background: #f9f9f9;
+  border: 2px solid #2ecc71;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.produto img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.produto h3 {
+  margin-top: 15px;
+  color: #e74c3c;
+}
+
+label, select, input {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+select, input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  background: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Responsivo para celular */
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+  .produto {
+    padding: 15px;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -262,3 +284,4 @@
 
 </body>
 </html>
+
