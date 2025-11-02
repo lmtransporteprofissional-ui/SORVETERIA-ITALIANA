@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Italiana Sorvetes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #333;
+    }
+    header {
+      background: #e74c3c;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    header img {
+      max-width: 150px;
+      margin-bottom: 10px;
+    }
+    .catalogo {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 30px;
+      gap: 20px;
+    }
+    .produto {
+      background: #f9f9f9;
+      border: 2px solid #2ecc71;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .produto img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .produto h3 {
+      margin-top: 15px;
+      color: #e74c3c;
+    }
+    .produto p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    select, input {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      background: #2ecc71;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="Italiana Sorvetes">
+    <h1>Italiana Sorvetes 🍨</h1>
+    <p>Sabor e tradição italiana em cada colher</p>
+  </header>
+
+  <section class="catalogo">
+<div class="produto">
+  <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Sorvete 5L">
+  <h3>Sorvete 5 Litros – R$ 45,00</h3>
+  <label for="sabor-5l">Sabor:</label>
+  <select id="sabor-5l">
+    <option>Chocolate Trufado</option>
+    <option>Passas ao Rum</option>
+    <option>Torta Alemã</option>
+    <option>Torta de Limão</option>
+    <option>Maracujá</option>
+  </select>
+  <label for="qtd-5l">Quantidade:</label>
+  <input type="number" id="qtd-5l" min="1" value="1">
+  <button onclick="enviarPedido('Sorvete 5 Litros', 'sabor-5l', 'qtd-5l')">Fazer pedido via WhatsApp</button>
+</div>
+<div class="produto">
+  <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Sorvete 10L">
+  <h3>Sorvete 10 Litros – R$ 80,00</h3>
+  <label for="sabor-10l">Sabor:</label>
+  <select id="sabor-10l">
+    <option>Ferrero Rocher</option>
+    <option>Rafaello</option>
+    <option>Frutas Vermelhas</option>
+    <option>Leitinho Trufado</option>
+  </select>
+  <label for="qtd-10l">Quantidade:</label>
+  <input type="number" id="qtd-10l" min="1" value="1">
+  <button onclick="enviarPedido('Sorvete 10 Litros', 'sabor-10l', 'qtd-10l')">Fazer pedido via WhatsApp</button>
+</div>
+<div class="produto">
+  <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Copos 250ml">
+  <h3>Sorvete em Copos – 250ml (12 unidades) – R$ 32,00</h3>
+  <label for="sabor-copo250">Sabor:</label>
+  <select id="sabor-copo250">
+    <option>Abacaxi</option>
+    <option>Coco</option>
+    <option>Chocolate</option>
+    <option>Morango</option>
+    <option>Creme</option>
+    <option>Flocos</option>
+    <option>Sundae</option>
+    <option>Maracujá</option>
+    <option>Milho verde</option>
+    <option>Napolitano</option>
+    <option>Galak</option>
+    <option>Passas ao rum</option>
+  </select>
+  <label for="qtd-copo250">Quantidade:</label>
+  <input type="number" id="qtd-copo250" min="1" value="1">
+  <button onclick="enviarPedido('Sorvete em Copos – 250ml (12 unidades)', 'sabor-copo250', 'qtd-copo250')">Fazer pedido via WhatsApp</button>
+</div>
+<div class="produto">
+  <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Copos 500ml">
+  <h3>Sorvete em Copos – 500ml (8 unidades) – R$ 32,00</h3>
+  <label for="sabor-copo500">Sabor:</label>
+  <select id="sabor-copo500">
+    <option>Abacaxi</option>
+    <option>Coco</option>
+    <option>Chocolate</option>
+    <option>Morango</option>
+    <option>Creme</option>
+    <option>Flocos</option>
+    <option>Sundae</option>
+    <option>Maracujá</option>
+    <option>Milho verde</option>
+    <option>Napolitano</option>
+    <option>Galak</option>
+    <option>Passas ao rum</option>
+  </select>
+  <label for="qtd-copo500">Quantidade:</label>
+  <input type="number" id="qtd-copo500" min="1" value="1">
+  <button onclick="enviarPedido('Sorvete em Copos – 500ml (8 unidades)', 'sabor-copo500', 'qtd-copo500')">Fazer pedido via WhatsApp</button>
+</div>
+<div class="produto">
+  <img src="https://static.wixstatic.com/media/73fa9b_8381802dec0d4433b992c4ee945f234c~mv2_d_2833_1380_s_2.jpg/v1/fill/w_1920,h_935,al_c,q_85,usm_0.66_1.00_0.01/picoles-DUP1.jpg" alt="Picolé Tradicional">
+  <h3>Picolé Tradicional – Caixa com 20 unidades – R$ 22,00</h3>
+  <label for="sabor-picole">Sabor:</label>
+  <select id="sabor-picole">
+    <option>Abacate</option>
+    <option>Abacaxi</option>
+    <option>Abóbora com coco</option>
+    <option>Açaí</option>
+    <option>Amendoim</option>
+    <option>Banana com aveia</option>
+    <option>Blue ice</option>
+    <option>Brigadeiro</option>
+    <option>Chocolate</option>
+    <option>Coco</option>
+    <option>Cupuaçu</option>
+    <option>Flocos</option>
+    <option>Goiaba</option>
+    <option>Graviola</option>
+    <option>Leite condensado</option>
+    <option>Limão</option>
+    <option>Manga</option>
+    <option>Maracujá</option>
+    <option>Milho verde</option>
+    <option>Morango</option>
+    <option>Passas ao rum</option>
+    <option>Queijo</option>
+    <option>Tapioca</option>
+    <option>Totti fruti</option>
+    <option>Uva</option>
+  </select>
+  <label for="qtd-picole">Quantidade:</label>
+  <input type="number" id="qtd-picole" min="1" value="1">
+  <button onclick="enviarPedido('Picolé Tradicional – Caixa com 20 unidades', 'sabor-picole', 'qtd-picole')">Fazer pedido via WhatsApp</button>
+</div>
+<div class="produto">
+  <img src="https://static.wixstatic.com/media/73fa9b_8381802dec0d4433b992c4ee945f234c~mv2_d_2833_1380_s_2.jpg/v1/fill/w_1920,h_935,al_c,q_85,usm_0.66_1.00_0.01/picoles-DUP1.jpg" alt="Picolé Skimo">
+  <h3>Picolé Skimo – Caixa com 18 unidades – R$ 38,00</h3>
+  <label for="sabor-skimo">Sabor:</label>
+  <select id="sabor-skimo">
+    <option>Brigadeiro</option>
+    <option>Coco</option>
+    <option>Morango</option>
+    <option>Maracujá</option>
+    <option>Nata</option>
+  </select>
+  <label for="qtd-skimo">Quantidade:</label>
+  <input type="number" id="qtd-skimo" min="1" value="1">
+  <button onclick="enviarPedido('Picolé Skimo – Caixa com 18 unidades', 'sabor-skimo', 'qtd-skimo')">Fazer pedido via WhatsApp</button>
+</div>
+<!-- Açaí 2 Litros -->
+<div class="produto">
+  <img src="https://www.receitasdecomida.com.br/wp-content/uploads/2012/12/acai-na-tigela-com-banana-9543.jpg" alt="Açaí 2L">
+  <h3>Açaí – 2 Litros – R$ 25,00</h3>
+  <label for="sabor-acai2">Sabor:</label>
+  <select id="sabor-acai2">
+    <option>Banana</option>
+    <option>Morango</option>
+    <option>Natural</option>
+  </select>
+  <label for="qtd-acai2">Quantidade:</label>
+  <input type="number" id="qtd-acai2" min="1" value="1">
+  <button onclick="enviarPedido('Açaí – 2 Litros', 'sabor-acai2', 'qtd-acai2')">Fazer pedido via WhatsApp</button>
+</div>
+
+<!-- Açaí 5 Litros -->
+<div class="produto">
+  <img src="https://www.receitasdecomida.com.br/wp-content/uploads/2012/12/acai-na-tigela-com-banana-9543.jpg" alt="Açaí 5L">
+  <h3>Açaí – 5 Litros – R$ 50,00</h3>
+  <label for="sabor-acai5">Sabor:</label>
+  <select id="sabor-acai5">
+    <option>Banana</option>
+    <option>Morango</option>
+    <option>Natural</option>
+  </select>
+  <label for="qtd-acai5">Quantidade:</label>
+  <input type="number" id="qtd-acai5" min="1" value="1">
+  <button onclick="enviarPedido('Açaí – 5 Litros', 'sabor-acai5', 'qtd-acai5')">Fazer pedido via WhatsApp</button>
+</div>
+
+<!-- Açaí 10 Litros -->
+<div class="produto">
+  <img src="https://www.receitasdecomida.com.br/wp-content/uploads/2012/12/acai-na-tigela-com-banana-9543.jpg" alt="Açaí 10L">
+  <h3>Açaí – 10 Litros – R$ 90,00</h3>
+  <label for="sabor-acai10">Sabor:</label>
+  <select id="sabor-acai10">
+    <option>Banana</option>
+    <option>Morango</option>
+    <option>Natural</option>
+  </select>
+  <label for="qtd-acai10">Quantidade:</label>
+  <input type="number" id="qtd-acai10" min="1" value="1">
+  <button onclick="enviarPedido('Açaí – 10 Litros', 'sabor-acai10', 'qtd-acai10')">Fazer pedido via WhatsApp</button>
+</div>
+  </section>
+
+  <script>
+    function enviarPedido(produto, saborId, qtdId) {
+      const sabor = document.getElementById(saborId).value;
+      const qtd = document.getElementById(qtdId).value;
+      const mensagem = `Olá! Gostaria de pedir ${qtd} unidade(s) de ${produto}, sabor ${sabor}.`;
+      const numero = '5521964816872';
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
