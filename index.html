@@ -355,17 +355,6 @@ button {
   }
 
   function atualizarCarrinho()
-  let total = 0;
-carrinho.forEach(item => {
-  const precoUnitario = precos[item.produto] || 0;
-  total += precoUnitario * item.qtd;
-});
-
-const totalDiv = document.createElement("div");
-totalDiv.style.marginTop = "20px";
-totalDiv.style.fontWeight = "bold";
-totalDiv.innerText = `💰 Total: R$ ${total.toFixed(2)}`;
-document.getElementById("carrinho").appendChild(totalDiv);
 {
     const lista = document.getElementById("lista-carrinho");
     lista.innerHTML = "";
@@ -379,6 +368,18 @@ document.getElementById("carrinho").appendChild(totalDiv);
       `;
       lista.appendChild(li);
     });
+  let total = 0;
+carrinho.forEach(item => {
+  const precoUnitario = precos[item.produto] || 0;
+  total += precoUnitario * item.qtd;
+});
+
+const totalDiv = document.createElement("div");
+totalDiv.style.marginTop = "20px";
+totalDiv.style.fontWeight = "bold";
+totalDiv.innerText = `💰 Total: R$ ${total.toFixed(2)}`;
+document.getElementById("carrinho").appendChild(totalDiv);
+
   }
 
   function removerItem(index) {
@@ -407,6 +408,7 @@ document.getElementById("carrinho").appendChild(totalDiv);
 
 </body>
 </html>
+
 
 
 
