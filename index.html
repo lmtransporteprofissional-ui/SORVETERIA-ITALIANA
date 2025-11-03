@@ -326,20 +326,20 @@ button {
 
 
 <script>
-  const precos = {
-  "Sorvete 2 Litros": 25.00,
-  "Sorvete 5 Litros": 45.00,
-  "Sorvete 10 Litros": 80.00,
-  "Sorvete em Copos – 250ml (12 unidades)": 32.00,
-  "Sorvete em Copos – 500ml (8 unidades)": 32.00,
-  "Picolé Tradicional – Caixa com 20 unidades": 22.00,
-  "Picolé Skimo – Caixa com 18 unidades": 38.00,
-  "Açaí – 2 Litros": 25.00,
-  "Açaí – 5 Litros": 50.00,
-  "Açaí – 10 Litros": 90.00
-};
-
   const carrinho = [];
+
+  const precos = {
+    "Sorvete 2 Litros": 25.00,
+    "Sorvete 5 Litros": 45.00,
+    "Sorvete 10 Litros": 80.00,
+    "Sorvete em Copos – 250ml (12 unidades)": 25.00,
+    "Sorvete em Copos – 500ml (2 unidades)": 12.00,
+    "Picolé Tradicional – Caixa com 20 unidades": 22.00,
+    "Picolé Skimo – Caixa com 18 unidades": 38.00,
+    "Açaí – 2 Litros": 25.00,
+    "Açaí – 5 Litros": 50.00,
+    "Açaí – 10 Litros": 90.00
+  };
 
   function adicionarCarrinho(produto, saborId, qtdId) {
     const sabor = document.getElementById(saborId).value;
@@ -349,39 +349,49 @@ button {
       return;
     }
 
-    carrinho.push({ produto, sabor, qtd });
+    const precoUnitario = precos[produto] || 0;
+    const itemExistente = carrinho.find(item => item.produto === produto && item.sabor === sabor);
+
+    if (itemExistente) {
+      itemExistente.qtd += qtd;
+      itemExistente.total = itemExistente.qtd * precoUnitario;
+    } else {
+      carrinho.push({
+        produto,
+        sabor,
+        qtd,
+        total: qtd * precoUnitario
+      });
+    }
+
     atualizarCarrinho();
     alert(`${qtd}x ${produto} (${sabor}) adicionado ao carrinho`);
   }
 
-  function atualizarCarrinho()
-{
-  document.getElementById("carrinho").querySelectorAll("div:not(#lista-carrinho)").forEach(el => el.remove());
-
+  function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
     lista.innerHTML = "";
 
+    let totalGeral = 0;
+
     carrinho.forEach((item, index) => {
+      totalGeral += item.total;
+
       const li = document.createElement("li");
       li.style.marginBottom = "10px";
       li.innerHTML = `
         ${item.qtd}x <strong>${item.produto}</strong> – sabor <em>${item.sabor}</em>
+        <br>💰 Total: R$ ${item.total.toFixed(2)}
         <button onclick="removerItem(${index})" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px; border-radius: 5px;">Remover</button>
       `;
       lista.appendChild(li);
     });
-  let total = 0;
-carrinho.forEach(item => {
-  const precoUnitario = precos[item.produto] || 0;
-  total += precoUnitario * item.qtd;
-});
 
-const totalDiv = document.createElement("div");
-totalDiv.style.marginTop = "20px";
-totalDiv.style.fontWeight = "bold";
-totalDiv.innerText = `💰 Total: R$ ${total.toFixed(2)}`;
-document.getElementById("carrinho").appendChild(totalDiv);
-
+    const totalDiv = document.createElement("div");
+    totalDiv.style.marginTop = "20px";
+    totalDiv.style.fontWeight = "bold";
+    totalDiv.innerText = `🧾 Valor total do pedido: R$ ${totalGeral.toFixed(2)}`;
+    lista.appendChild(totalDiv);
   }
 
   function removerItem(index) {
@@ -400,6 +410,9 @@ document.getElementById("carrinho").appendChild(totalDiv);
       mensagem += `• ${item.qtd}x ${item.produto} – sabor ${item.sabor}\n`;
     });
 
+    let total = carrinho.reduce((acc, item) => acc + item.total, 0);
+    mensagem += `\n🧾 Valor total: R$ ${total.toFixed(2)}`;
+
     const numero = '5521964816872';
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, '_blank');
@@ -410,6 +423,7 @@ document.getElementById("carrinho").appendChild(totalDiv);
 
 </body>
 </html>
+
 
 
 
