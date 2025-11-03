@@ -102,6 +102,12 @@ button {
   </header>
 
   <section class="catalogo">
+    <div id="carrinho" style="padding: 20px; max-width: 600px; margin: auto;">
+  <h2>🛒 Carrinho de Compras</h2>
+  <ul id="lista-carrinho" style="list-style: none; padding: 0;"></ul>
+  <button onclick="finalizarPedido()">Finalizar pedido via WhatsApp</button>
+</div>
+
 <div class="produto">
   <img src="sorvete5l.png" alt="Sorvete 5L">
   <h3>Sorvete 5 Litros – R$ 45,00</h3>
@@ -319,18 +325,40 @@ button {
 </div>
 
 
- <script>
+<script>
   const carrinho = [];
 
   function adicionarCarrinho(produto, saborId, qtdId) {
     const sabor = document.getElementById(saborId).value;
-    const qtd = document.getElementById(qtdId).value;
+    const qtd = parseInt(document.getElementById(qtdId).value);
     if (!sabor || qtd <= 0) {
       alert("Escolha um sabor e uma quantidade válida.");
       return;
     }
+
     carrinho.push({ produto, sabor, qtd });
+    atualizarCarrinho();
     alert(`${qtd}x ${produto} (${sabor}) adicionado ao carrinho`);
+  }
+
+  function atualizarCarrinho() {
+    const lista = document.getElementById("lista-carrinho");
+    lista.innerHTML = "";
+
+    carrinho.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.style.marginBottom = "10px";
+      li.innerHTML = `
+        ${item.qtd}x <strong>${item.produto}</strong> – sabor <em>${item.sabor}</em>
+        <button onclick="removerItem(${index})" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px; border-radius: 5px;">Remover</button>
+      `;
+      lista.appendChild(li);
+    });
+  }
+
+  function removerItem(index) {
+    carrinho.splice(index, 1);
+    atualizarCarrinho();
   }
 
   function finalizarPedido() {
@@ -351,8 +379,10 @@ button {
 </script>
 
 
+
 </body>
 </html>
+
 
 
 
