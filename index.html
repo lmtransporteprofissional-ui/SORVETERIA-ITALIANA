@@ -356,6 +356,8 @@ button {
 
   function atualizarCarrinho()
 {
+  document.getElementById("carrinho").querySelectorAll("div:not(#lista-carrinho)").forEach(el => el.remove());
+
     const lista = document.getElementById("lista-carrinho");
     lista.innerHTML = "";
 
@@ -408,6 +410,7 @@ document.getElementById("carrinho").appendChild(totalDiv);
 
 </body>
 </html>
+
 
 
 
