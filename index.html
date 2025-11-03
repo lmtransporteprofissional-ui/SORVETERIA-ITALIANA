@@ -115,7 +115,7 @@ button {
   </select>
   <label for="qtd-5l">Quantidade:</label>
   <input type="number" id="qtd-5l" min="1" value="1">
-  <button onclick="enviarPedido('Sorvete 5 Litros', 'sabor-5l', 'qtd-5l')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Sorvete 5 Litros', 'sabor-5l', 'qtd-5l')">Adicionar ao carrinho</button>
 </div>
 <div class="produto">
   <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Sorvete 10L">
@@ -129,7 +129,7 @@ button {
   </select>
   <label for="qtd-10l">Quantidade:</label>
   <input type="number" id="qtd-10l" min="1" value="1">
-  <button onclick="enviarPedido('Sorvete 10 Litros', 'sabor-10l', 'qtd-10l')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Sorvete 10 Litros', 'sabor-10l', 'qtd-10l')">Adicionar ao carrinho</button>
 </div>
 <div class="produto">
   <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Copos 250ml">
@@ -151,7 +151,7 @@ button {
   </select>
   <label for="qtd-copo250">Quantidade:</label>
   <input type="number" id="qtd-copo250" min="1" value="1">
-  <button onclick="enviarPedido('Sorvete em Copos – 250ml (12 unidades)', 'sabor-copo250', 'qtd-copo250')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Sorvete em Copos 250ml (12 unid)', 'sabor-copo250', 'qtd-copo250')">Adicionar ao carrinho</button>
 </div>
 <div class="produto">
   <img src="https://www.produtosfinos.com.br/wp-content/uploads/2015/09/especial_gelattos_-_sorvetes_italianos.jpg" alt="Copos 500ml">
@@ -173,7 +173,7 @@ button {
   </select>
   <label for="qtd-copo500">Quantidade:</label>
   <input type="number" id="qtd-copo500" min="1" value="1">
-  <button onclick="enviarPedido('Sorvete em Copos – 500ml (8 unidades)', 'sabor-copo500', 'qtd-copo500')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Sorvete em Copos 500ml (8 unid)', 'sabor-copo500', 'qtd-copo500')">Adicionar ao carrinho</button>
 </div>
 <div class="produto">
   <img src="https://static.wixstatic.com/media/73fa9b_8381802dec0d4433b992c4ee945f234c~mv2_d_2833_1380_s_2.jpg/v1/fill/w_1920,h_935,al_c,q_85,usm_0.66_1.00_0.01/picoles-DUP1.jpg" alt="Picolé Tradicional">
@@ -208,7 +208,7 @@ button {
   </select>
   <label for="qtd-picole">Quantidade:</label>
   <input type="number" id="qtd-picole" min="1" value="1">
-  <button onclick="enviarPedido('Picolé Tradicional – Caixa com 20 unidades', 'sabor-picole', 'qtd-picole')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Picolé Tradicional – Caixa com 20 unidades', 'sabor-picole', 'qtd-picole')">Adicionar ao carrinho</button>
 </div>
 <div class="produto">
   <img src="https://static.wixstatic.com/media/73fa9b_8381802dec0d4433b992c4ee945f234c~mv2_d_2833_1380_s_2.jpg/v1/fill/w_1920,h_935,al_c,q_85,usm_0.66_1.00_0.01/picoles-DUP1.jpg" alt="Picolé Skimo">
@@ -223,7 +223,7 @@ button {
   </select>
   <label for="qtd-skimo">Quantidade:</label>
   <input type="number" id="qtd-skimo" min="1" value="1">
-  <button onclick="enviarPedido('Picolé Skimo – Caixa com 18 unidades', 'sabor-skimo', 'qtd-skimo')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Picolé Skimo – Caixa com 18 unidades', 'sabor-skimo', 'qtd-skimo')">Adicionar ao carrinho</button>
 </div>
 <!-- Açaí 2 Litros -->
 <div class="produto">
@@ -237,7 +237,7 @@ button {
   </select>
   <label for="qtd-acai2">Quantidade:</label>
   <input type="number" id="qtd-acai2" min="1" value="1">
-  <button onclick="enviarPedido('Açaí – 2 Litros', 'sabor-acai2', 'qtd-acai2')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Açaí – 2 Litros', 'sabor-acai2', 'qtd-acai2')">Adicionar ao carrinho</button>
 </div>
 
 <!-- Açaí 5 Litros -->
@@ -252,7 +252,7 @@ button {
   </select>
   <label for="qtd-acai5">Quantidade:</label>
   <input type="number" id="qtd-acai5" min="1" value="1">
-  <button onclick="enviarPedido('Açaí – 5 Litros', 'sabor-acai5', 'qtd-acai5')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Açaí – 5 Litros', 'sabor-acai5', 'qtd-acai5')">Adicionar ao carrinho</button>
 </div>
 
 <!-- Açaí 10 Litros -->
@@ -267,21 +267,47 @@ button {
   </select>
   <label for="qtd-acai10">Quantidade:</label>
   <input type="number" id="qtd-acai10" min="1" value="1">
-  <button onclick="enviarPedido('Açaí – 10 Litros', 'sabor-acai10', 'qtd-acai10')">Fazer pedido via WhatsApp</button>
+  <button onclick="adicionarCarrinho('Açaí – 10 Litros', 'sabor-acai10', 'qtd-acai10')">Adicionar ao carrinho</button>
 </div>
   </section>
+  <div class="finalizar" style="text-align:center; margin: 40px 0;">
+  <button onclick="finalizarPedido()">🛒 Finalizar pedido via WhatsApp</button>
+</div>
 
-  <script>
-    function enviarPedido(produto, saborId, qtdId) {
-      const sabor = document.getElementById(saborId).value;
-      const qtd = document.getElementById(qtdId).value;
-      const mensagem = `Olá! Gostaria de pedir ${qtd} unidade(s) de ${produto}, sabor ${sabor}.`;
-      const numero = '5521964816872';
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-      window.open(url, '_blank');
+
+ <script>
+  const carrinho = [];
+
+  function adicionarCarrinho(produto, saborId, qtdId) {
+    const sabor = document.getElementById(saborId).value;
+    const qtd = document.getElementById(qtdId).value;
+    if (!sabor || qtd <= 0) {
+      alert("Escolha um sabor e uma quantidade válida.");
+      return;
     }
-  </script>
+    carrinho.push({ produto, sabor, qtd });
+    alert(`${qtd}x ${produto} (${sabor}) adicionado ao carrinho`);
+  }
+
+  function finalizarPedido() {
+    if (carrinho.length === 0) {
+      alert("Seu carrinho está vazio!");
+      return;
+    }
+
+    let mensagem = "Olá! Gostaria de fazer o seguinte pedido:\n";
+    carrinho.forEach(item => {
+      mensagem += `• ${item.qtd}x ${item.produto} – sabor ${item.sabor}\n`;
+    });
+
+    const numero = '5521964816872';
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
+  }
+</script>
+
 
 </body>
 </html>
+
 
