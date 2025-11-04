@@ -65,7 +65,6 @@
   <header>
     <div class="container">
       <div class="brand">
-        <!-- (Pode manter o onerror na logo/hero se quiser esconder quando não existir) -->
         <img id="logoImg" class="logo" src="" alt="Logo Italiana Sorvetes" onerror="this.style.display='none'">
         <div>
           <h1>🍨 Italiana Sorvetes</h1>
@@ -90,7 +89,7 @@
         <div id="cartBody"><p class="cart-empty">Seu carrinho está vazio.</p></div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
 
-        <!-- Campos de entrega -->
+        <!-- Dados de entrega -->
         <div class="addr" aria-label="Dados de entrega">
           <div>
             <label for="addrLogradouro">Endereço de entrega</label>
@@ -122,10 +121,7 @@
     const WHATSAPP_NUMBER = '5521964816872';
     const CURRENCY = new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' });
 
-    /* ⚠️ Ajuste os caminhos AQUI.
-       Use caminhos RELATIVOS se seu site estiver em subpasta (./img/...).
-       Se seu site estiver na raiz do domínio, tanto ./img quanto /img funcionam,
-       mas prefira ./img para evitar 404 em subpastas. */
+    // 🔁 TROQUE pelos nomes reais dos arquivos no seu servidor (use caminho relativo ./)
     const imagens = {
       logo: './img/logo.png',
       hero: './img/hero.jpg',
@@ -142,6 +138,7 @@
       acai10: './img/acai-10l.jpg',
     };
 
+    // favicon, logo, hero
     (function applyBrandImages(){
       const fav = document.getElementById('faviconLink');
       const logo = document.getElementById('logoImg');
@@ -183,36 +180,39 @@
 
     let carrinho = [];
 
+    // ⚙️ RENDER DE PRODUTOS (sem {srcImg}, usando concatenação segura)
     function renderProdutos(){
       const wrap = document.getElementById('products');
       wrap.innerHTML = '';
       catalogo.forEach(prod => {
         const card = document.createElement('div');
         card.className = 'card';
+
         const srcImg = imagens[prod.id] || '';
-        card.innerHTML = `
-          <div class="pimg-wrap">
-            ${srcImg ? `<{srcImg}`
-                     : `<span>Imagem não configurada</span>`}
-          </div>
-          <h4 class="title">${prod.nome}</h4>
-          <div class="price">${CURRENCY.format(prod.preco)}</div>
+        const imgHtml = srcImg
+          ? '<img class="pimg" src="' + srcImg + '" alt="Foto de ' + prod.nome + '">'
+          : '<span>Imagem não configurada</span>';
 
-          <label for="sabor-${prod.id}">Sabor</label>
-          <select id="sabor-${prod.id}">
-            ${prod.sabores.map(s => `<option value="${s}">${s}</option>`).join('')}
-          </select>
+        card.innerHTML =
+          '<div class="pimg-wrap">' + imgHtml + '</div>' +
+          '<h4 class="title">' + prod.nome + '</h4>' +
+          '<div class="price">' + CURRENCY.format(prod.preco) + '</div>' +
 
-          <div class="row">
-            <div>
-              <label for="qtd-${prod.id}">Quantidade</label>
-              <input type="number" id="qtd-${prod.id}" min="1" value="1">
-            </div>
-            <div style="display:flex; align-items:flex-end;">
-              <button class="btn btn-primary" data-add="${prod.id}">Adicionar</button>
-            </div>
-          </div>
-        `;
+          '<label for="sabor-' + prod.id + '">Sabor</label>' +
+          '<select id="sabor-' + prod.id + '">' +
+            prod.sabores.map(s => '<option value="' + s + '">' + s + '</option>').join('') +
+          '</select>' +
+
+          '<div class="row">' +
+            '<div>' +
+              '<label for="qtd-' + prod.id + '">Quantidade</label>' +
+              '<input type="number" id="qtd-' + prod.id + '" min="1" value="1">' +
+            '</div>' +
+            '<div style="display:flex; align-items:flex-end;">' +
+              '<button class="btn btn-primary" data-add="' + prod.id + '">Adicionar</button>' +
+            '</div>' +
+          '</div>';
+
         wrap.appendChild(card);
       });
 
@@ -220,11 +220,11 @@
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-add');
           const prod = catalogo.find(p => p.id === id);
-          const sabor = document.getElementById(`sabor-${id}`).value;
-          const qtd = parseInt(document.getElementById(`qtd-${id}`).value || '0', 10);
+          const sabor = document.getElementById('sabor-' + id).value;
+          const qtd = parseInt(document.getElementById('qtd-' + id).value || '0', 10);
           if(!qtd || qtd < 1){ alert('Informe uma quantidade válida.'); return; }
 
-          const key = `${id}|${sabor}`;
+          const key = id + '|' + sabor;
           const existente = carrinho.find(i => i.key === key);
           if(existente){ existente.qtd += qtd; }
           else { carrinho.push({ key, id, nome:prod.nome, sabor, preco:Number(prod.preco), qtd:Number(qtd) }); }
@@ -238,7 +238,7 @@
       const totalEl = document.getElementById('cartTotal');
 
       if(carrinho.length === 0){
-        body.innerHTML = `<p class="cart-empty">Seu carrinho está vazio.</p>`;
+        body.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
         totalEl.textContent = CURRENCY.format(0);
         return;
       }
@@ -253,18 +253,18 @@
 
         const li = document.createElement('div');
         li.className = 'cart-item';
-        li.innerHTML = `
-          <div>
-            <div><strong>${item.nome}</strong> — ${CURRENCY.format(item.preco)} <small>/un</small></div>
-            <small>Sabor: ${item.sabor}</small>
-            <div style="margin-top:6px; display:flex; gap:6px; align-items:center;">
-              <small>Qtd:</small>
-              <input type="number" min="1" value="${item.qtd}" data-qtd="${idx}" style="width:80px; padding:6px 8px; border:1px solid #eee; border-radius:6px;">
-              <button class="btn btn-ghost" data-rem="${idx}">Remover</button>
-            </div>
-          </div>
-          <div style="text-align:right"><div>${CURRENCY.format(sub)}</div></div>
-        `;
+        li.innerHTML =
+          '<div>' +
+            '<div><strong>' + item.nome + '</strong> — ' + CURRENCY.format(item.preco) + ' <small>/un</small></div>' +
+            '<small>Sabor: ' + item.sabor + '</small>' +
+            '<div style="margin-top:6px; display:flex; gap:6px; align-items:center;">' +
+              '<small>Qtd:</small>' +
+              '<input type="number" min="1" value="' + item.qtd + '" data-qtd="' + idx + '" style="width:80px; padding:6px 8px; border:1px solid #eee; border-radius:6px;">' +
+              '<button class="btn btn-ghost" data-rem="' + idx + '">Remover</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="text-align:right"><div>' + CURRENCY.format(sub) + '</div></div>';
+
         list.appendChild(li);
       });
 
@@ -290,13 +290,12 @@
       });
     }
 
-    // valida referência obrigatória
     function validarReferencia(){
       const ref = document.getElementById('addrReferencia');
       const err = document.getElementById('refError');
       const ok = ref.value.trim().length > 0;
       if(!ok){ ref.classList.add('is-invalid'); err.style.display = 'block'; }
-      else { ref.classList.remove('is-invalid'); err.style.display = 'none'; }
+      else   { ref.classList.remove('is-invalid'); err.style.display = 'none'; }
       return ok;
     }
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
@@ -313,16 +312,16 @@
       linhas.push('*Pedido – Italiana Sorvetes*');
       carrinho.forEach(item => {
         const sub = Number(item.preco) * Number(item.qtd);
-        linhas.push(`• ${item.nome} | Sabor: ${item.sabor} | Qtd: ${item.qtd} | Subtotal: ${CURRENCY.format(sub)}`);
+        linhas.push('• ' + item.nome + ' | Sabor: ' + item.sabor + ' | Qtd: ' + item.qtd + ' | Subtotal: ' + CURRENCY.format(sub));
       });
       const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
       linhas.push('');
-      linhas.push(`*Total:* ${CURRENCY.format(total)}`);
+      linhas.push('*Total:* ' + CURRENCY.format(total));
       linhas.push('');
       linhas.push('*Dados de entrega*');
-      linhas.push(`Endereço: ${end || '-'}`);
-      linhas.push(`Número: ${num || '-'}`);
-      linhas.push(`Ponto de referência: ${ref}`);
+      linhas.push('Endereço: ' + (end || '-'));
+      linhas.push('Número: ' + (num || '-'));
+      linhas.push('Ponto de referência: ' + ref);
       linhas.push('');
       linhas.push('_Envie seu nome para finalizarmos._');
 
@@ -334,11 +333,11 @@
     document.getElementById('checkout').addEventListener('click', finalizarWhatsApp);
     document.getElementById('clearCart').addEventListener('click', () => { carrinho = []; renderCarrinho(); });
 
-    // Render
+    // Inicialização
     renderProdutos();
     renderCarrinho();
 
-    // 👇 Log rápido para você checar os caminhos no console (F12)
+    // Log útil para conferir caminhos
     console.table(imagens);
   </script>
 </body>
