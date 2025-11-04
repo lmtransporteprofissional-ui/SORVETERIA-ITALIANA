@@ -5,6 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Italiana Sorvetes</title>
+  <!-- Favicon será setado via JS a partir de imagens.favicon -->
+  <link id="faviconLink" rel="icon" type="image/x-icon" href="">
   <style>
     :root{
       /* Tema vermelho + verde */
@@ -14,35 +16,43 @@
       --green-700:#1B5E20;
       --bg:#fffdfc;           /* Fundo claro levemente quente */
       --card:#ffffff;
-      --text:#222; 
-      --muted:#666; 
+      --text:#222;
+      --muted:#666;
       --border:#eaeaea;
-      --chip:#FFF3F3;         /* chip/realce leve em vermelho */
+      --chip:#FFF3F3;
     }
     *{box-sizing:border-box}
     body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; color:var(--text); background:linear-gradient(180deg,#fff,var(--bg)); }
-    header{ padding:24px 16px; background:var(--card); border-bottom:3px solid var(--red); position:sticky; top:0; z-index:10; }
-    .brand{display:flex; align-items:center; gap:10px}
-    .brand-badge{width:10px; height:10px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px rgba(46,125,50,.15)}
-    .container{max-width:1100px; margin:0 auto; padding:16px}
-    h1{margin:0 0 4px; font-size:1.8rem}
-    .tagline{color:var(--muted); margin:0}
+    header{ padding:16px; background:var(--card); border-bottom:3px solid var(--red); position:sticky; top:0; z-index:10; }
+    .container{max-width:1100px; margin:0 auto; padding:0 16px}
+    .brand{display:flex; align-items:center; gap:14px}
+    .logo{height:48px; width:auto; object-fit:contain}
+    h1{margin:0; font-size:1.85rem}
+    .tagline{color:var(--muted); margin:2px 0 0}
+
+    /* Hero/Banner */
+    .hero{margin:12px auto 0; max-width:1100px; padding:0 16px}
+    .hero img{width:100%; height:auto; border-radius:12px; border:1px solid var(--border); display:block}
+
     .grid{ display:grid; grid-template-columns:1fr; gap:16px; margin-top:16px; }
     @media(min-width:960px){ .grid{ grid-template-columns: 2fr 1fr; } }
     .products{ display:grid; grid-template-columns:1fr; gap:16px; }
     @media(min-width:720px){ .products{ grid-template-columns: repeat(2, 1fr); } }
     .card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-    .title{margin:0 0 8px; font-size:1.1rem}
-    .price{color:var(--red); font-weight:800; margin-bottom:12px}
+    .pimg-wrap{width:100%; aspect-ratio:16/9; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px}
+    .pimg{width:100%; height:100%; object-fit:cover; display:block}
+    .title{margin:0 0 6px; font-size:1.1rem}
+    .price{color:var(--red); font-weight:800; margin-bottom:10px}
     label{display:block; font-size:.9rem; color:var(--muted); margin-bottom:6px}
-    select, input[type="number"]{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:1rem; background:#fff; }
-    .row{display:grid; grid-template-columns: 1fr 120px; gap:12px; margin-top:10px}
+    select, input[type="number"], input[type="text"]{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:1rem; background:#fff; }
+    .row{display:grid; grid-template-columns: 1fr 120px; gap:12px; margin-top:8px}
     .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; border:none; border-radius:10px; cursor:pointer; font-weight:700; letter-spacing:.2px }
     .btn-primary{ background:var(--red); color:#fff }
     .btn-primary:hover{ background:var(--red-700) }
     .btn-success{ background:var(--green); color:#fff }
     .btn-success:hover{ background:var(--green-700) }
     .btn-ghost{ background:transparent; color:var(--red); border:1px solid var(--red); }
+
     aside.cart{ position:sticky; top:88px; align-self:start; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
     .cart h3{margin:0 0 12px}
     .cart-empty{color:var(--muted); font-size:.95rem; background:var(--chip); padding:10px; border-radius:8px}
@@ -53,13 +63,21 @@
     .cart-total span:last-child{color:var(--green)}
     .footer-note{font-size:.9rem; color:var(--muted); margin-top:6px}
     .chip{display:inline-block; font-size:.8rem; padding:4px 8px; background:var(--chip); color:var(--red); border-radius:999px; border:1px solid #f5dada; font-weight:700}
+
+    /* Campos de entrega */
+    .addr{ display:flex; flex-direction:column; gap:10px; margin:12px 0 }
+    .addr-row{ display:grid; grid-template-columns: 1.3fr 1.7fr; gap:10px }
+    @media (max-width: 480px){ .addr-row{ grid-template-columns:1fr; } }
+    .req{ color:var(--red); font-weight:800 }
+    .error{ color:var(--red); font-size:.85rem; margin-top:4px; display:none }
+    .is-invalid{ border-color: var(--red); box-shadow:0 0 0 3px rgba(198,40,40,.08) }
   </style>
 </head>
 <body>
   <header>
     <div class="container">
       <div class="brand">
-        <div class="brand-badge" aria-hidden="true"></div>
+        <img id="logoImg" class="logo" src="" alt="Logo Italiana Sorvetes" onerror="this.style.display='none'">
         <div>
           <h1>🍨 Italiana Sorvetes</h1>
           <p class="tagline">Sabor e tradição italiana em cada colher</p>
@@ -68,9 +86,13 @@
     </div>
   </header>
 
+  <!-- HERO / BANNER -->
+  <section class="hero">
+    <img id="heroImg" src="" alt="Banner Italiana Sorvetes" onerror="this.style.display='none'">
+  </section>
+
   <main class="container">
     <div class="grid">
-
       <!-- LISTA DE PRODUTOS -->
       <section>
         <div class="products" id="products"></div>
@@ -83,13 +105,32 @@
           <p class="cart-empty">Seu carrinho está vazio.</p>
         </div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
+
+        <!-- CAMPOS DE ENTREGA -->
+        <div class="addr" aria-label="Dados de entrega">
+          <div>
+            <label for="addrLogradouro">Endereço de entrega</label>
+            <input type="text" id="addrLogradouro" placeholder="Rua, avenida, lote, complemento...">
+          </div>
+          <div class="addr-row">
+            <div>
+              <label for="addrNumero">Número</label>
+              <input type="text" id="addrNumero" placeholder="Ex.: 123">
+            </div>
+            <div>
+              <label for="addrReferencia">Ponto de referência <span class="req">*</span></label>
+              <input type="text" id="addrReferencia" placeholder="Ex.: Próximo ao posto X ou padaria Y" aria-required="true">
+              <div id="refError" class="error">Ponto de referência é obrigatório.</div>
+            </div>
+          </div>
+        </div>
+
         <div style="display:flex; gap:8px; flex-wrap:wrap">
           <button class="btn btn-ghost" id="clearCart">Limpar</button>
           <button class="btn btn-success" id="checkout">Finalizar pedido via WhatsApp</button>
         </div>
-        <p class="footer-note">Confirme os sabores antes de finalizar 😉</p>
+        <p class="footer-note">Confirme sabores e dados de entrega antes de finalizar 😉</p>
       </aside>
-
     </div>
   </main>
 
@@ -98,7 +139,34 @@
     const WHATSAPP_NUMBER = '5521964816872'; // Número solicitado
     const CURRENCY = new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' });
 
-    // Catálogo (do seu texto original)
+    // ⬇️ TROQUE pelos arquivos reais que já estão no servidor
+    const imagens = {
+      logo: '/img/logo.png',
+      hero: '/img/hero.jpg',
+      favicon: '/img/favicon.ico',
+      sorvete5: '/img/sorvete-5l.jpg',
+      sorvete10: '/img/sorvete-10l.jpg',
+      copos250: '/img/copos-250.jpg',
+      sorvete2: '/img/sorvete-2l.jpg',
+      copos500: '/img/copos-500.jpg',
+      picoleTrad: '/img/picole-trad.jpg',
+      picoleSkimo: '/img/picole-skimo.jpg',
+      acai2: '/img/acai-2l.jpg',
+      acai5: '/img/acai-5l.jpg',
+      acai10: '/img/acai-10l.jpg',
+    };
+
+    // Define favicon, logo e hero dinamicamente
+    (function applyBrandImages(){
+      const fav = document.getElementById('faviconLink');
+      const logo = document.getElementById('logoImg');
+      const hero = document.getElementById('heroImg');
+      if (imagens.favicon) fav.href = imagens.favicon;
+      if (imagens.logo) logo.src = imagens.logo;
+      if (imagens.hero) hero.src = imagens.hero;
+    })();
+
+    // Catálogo
     const saboresComuns = [
       'Napolitano','Flocos','Creme','Morango','Chocolate','Chocolate Trufado',
       'Passas ao rum','Torta alemã','Torta de limão','Maracujá','Ferrero Rocher',
@@ -120,16 +188,16 @@
     const saboresAcai = ['Banana','Morango','Natural'];
 
     const catalogo = [
-      { id:'sorvete5', nome:'Sorvete 5 Litros', preco:45, sabores:saboresComuns },
-      { id:'sorvete10', nome:'Sorvete 10 Litros', preco:80, sabores:saboresComuns },
-      { id:'copos250', nome:'Sorvete em Copos – 250ml (12 un.)', preco:32, sabores:saboresCopos },
-      { id:'sorvete2', nome:'Sorvete 2 Litros', preco:25, sabores:saboresComuns },
-      { id:'copos500', nome:'Sorvete em Copos – 500ml (8 un.)', preco:32, sabores:saboresCopos },
-      { id:'picoleTrad', nome:'Picolé Tradicional – Caixa c/ 20', preco:22, sabores:saboresPicoleTrad },
-      { id:'picoleSkimo', nome:'Picolé Skimo – Caixa c/ 18', preco:38, sabores:saboresSkimo },
-      { id:'acai2', nome:'Açaí – 2 Litros', preco:25, sabores:saboresAcai },
-      { id:'acai5', nome:'Açaí – 5 Litros', preco:50, sabores:saboresAcai },
-      { id:'acai10', nome:'Açaí – 10 Litros', preco:90, sabores:saboresAcai },
+      { id:'sorvete5',   nome:'Sorvete 5 Litros',                  preco:45, sabores:saboresComuns },
+      { id:'sorvete10',  nome:'Sorvete 10 Litros',                 preco:80, sabores:saboresComuns },
+      { id:'copos250',   nome:'Sorvete em Copos – 250ml (12 un.)', preco:32, sabores:saboresCopos },
+      { id:'sorvete2',   nome:'Sorvete 2 Litros',                  preco:25, sabores:saboresComuns },
+      { id:'copos500',   nome:'Sorvete em Copos – 500ml (8 un.)',  preco:32, sabores:saboresCopos },
+      { id:'picoleTrad', nome:'Picolé Tradicional – Caixa c/ 20',   preco:22, sabores:saboresPicoleTrad },
+      { id:'picoleSkimo',nome:'Picolé Skimo – Caixa c/ 18',         preco:38, sabores:saboresSkimo },
+      { id:'acai2',      nome:'Açaí – 2 Litros',                    preco:25, sabores:saboresAcai },
+      { id:'acai5',      nome:'Açaí – 5 Litros',                    preco:50, sabores:saboresAcai },
+      { id:'acai10',     nome:'Açaí – 10 Litros',                   preco:90, sabores:saboresAcai },
     ];
 
     // Estado do carrinho
@@ -142,8 +210,10 @@
       catalogo.forEach(prod => {
         const card = document.createElement('div');
         card.className = 'card';
+        const srcImg = imagens[prod.id] || '';
         card.innerHTML = `
-          <h4 class="title">${prod.nome}</h4>
+          <div class="pimg-wrap">
+            <img class="pimg" src="${srcImg}" alt="4 class="title">${prod.nome}</h4>
           <div class="price">${CURRENCY.format(prod.preco)}</div>
 
           <label for="sabor-${prod.id}">Sabor</label>
@@ -178,7 +248,6 @@
           if(existente){
             existente.qtd += qtd;
           }else{
-            // preco garantido como número
             carrinho.push({ key, id, nome:prod.nome, sabor, preco:Number(prod.preco), qtd:Number(qtd) });
           }
           renderCarrinho();
@@ -245,22 +314,53 @@
       });
     }
 
+    // Validação do ponto de referência (obrigatório)
+    function validarReferencia(){
+      const ref = document.getElementById('addrReferencia');
+      const err = document.getElementById('refError');
+      const ok = ref.value.trim().length > 0;
+      if(!ok){
+        ref.classList.add('is-invalid');
+        err.style.display = 'block';
+      }else{
+        ref.classList.remove('is-invalid');
+        err.style.display = 'none';
+      }
+      return ok;
+    }
+
+    document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
+
     // WhatsApp
     function finalizarWhatsApp(){
       if(carrinho.length === 0){ alert('Seu carrinho está vazio.'); return; }
-      const linhas = [];
-      linhas.push('*Pedido – Italiana Sorvetes*%0A');
+      if(!validarReferencia()){
+        document.getElementById('addrReferencia').focus();
+        return;
+      }
 
+      const end = document.getElementById('addrLogradouro').value.trim();
+      const num = document.getElementById('addrNumero').value.trim();
+      const ref = document.getElementById('addrReferencia').value.trim();
+
+      const linhas = [];
+      linhas.push('*Pedido – Italiana Sorvetes*');
       carrinho.forEach(item => {
         const sub = Number(item.preco) * Number(item.qtd);
         linhas.push(`• ${item.nome} | Sabor: ${item.sabor} | Qtd: ${item.qtd} | Subtotal: ${CURRENCY.format(sub)}`);
       });
-
       const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
-      linhas.push(`%0A*Total:* ${CURRENCY.format(total)}`);
-      linhas.push('%0A_Envie seu nome e endereço para concluirmos a entrega._');
+      linhas.push('');
+      linhas.push(`*Total:* ${CURRENCY.format(total)}`);
+      linhas.push('');
+      linhas.push('*Dados de entrega*');
+      linhas.push(`Endereço: ${end || '-'}`);
+      linhas.push(`Número: ${num || '-'}`);
+      linhas.push(`Ponto de referência: ${ref}`);
+      linhas.push('');
+      linhas.push('_Envie seu nome para finalizarmos._');
 
-      const msg = encodeURIComponent(linhas.join('%0A'));
+      const msg = encodeURIComponent(linhas.join('\n'));
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
       window.open(url, '_blank');
     }
@@ -274,4 +374,3 @@
     renderCarrinho();
   </script>
 </body>
-</html>
