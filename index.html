@@ -1,25 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Italiana Sorvetes</title>
-  <!-- Favicon será setado via JS a partir de imagens.favicon -->
   <link id="faviconLink" rel="icon" type="image/x-icon" href="">
   <style>
     :root{
-      /* Tema vermelho + verde */
-      --red:#C62828;          /* Primária vermelha */
-      --red-700:#8E1D1D;
-      --green:#2E7D32;        /* Ação/WhatsApp verde */
-      --green-700:#1B5E20;
-      --bg:#fffdfc;           /* Fundo claro levemente quente */
-      --card:#ffffff;
-      --text:#222;
-      --muted:#666;
-      --border:#eaeaea;
-      --chip:#FFF3F3;
+      --red:#C62828; --red-700:#8E1D1D;
+      --green:#2E7D32; --green-700:#1B5E20;
+      --bg:#fffdfc; --card:#ffffff; --text:#222; --muted:#666; --border:#eaeaea; --chip:#FFF3F3;
     }
     *{box-sizing:border-box}
     body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; color:var(--text); background:linear-gradient(180deg,#fff,var(--bg)); }
@@ -30,7 +20,6 @@
     h1{margin:0; font-size:1.85rem}
     .tagline{color:var(--muted); margin:2px 0 0}
 
-    /* Hero/Banner */
     .hero{margin:12px auto 0; max-width:1100px; padding:0 16px}
     .hero img{width:100%; height:auto; border-radius:12px; border:1px solid var(--border); display:block}
 
@@ -39,7 +28,7 @@
     .products{ display:grid; grid-template-columns:1fr; gap:16px; }
     @media(min-width:720px){ .products{ grid-template-columns: repeat(2, 1fr); } }
     .card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-    .pimg-wrap{width:100%; aspect-ratio:16/9; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px}
+    .pimg-wrap{width:100%; aspect-ratio:16/9; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px; display:flex; align-items:center; justify-content:center; color:#999; font-size:.9rem}
     .pimg{width:100%; height:100%; object-fit:cover; display:block}
     .title{margin:0 0 6px; font-size:1.1rem}
     .price{color:var(--red); font-weight:800; margin-bottom:10px}
@@ -64,7 +53,6 @@
     .footer-note{font-size:.9rem; color:var(--muted); margin-top:6px}
     .chip{display:inline-block; font-size:.8rem; padding:4px 8px; background:var(--chip); color:var(--red); border-radius:999px; border:1px solid #f5dada; font-weight:700}
 
-    /* Campos de entrega */
     .addr{ display:flex; flex-direction:column; gap:10px; margin:12px 0 }
     .addr-row{ display:grid; grid-template-columns: 1.3fr 1.7fr; gap:10px }
     @media (max-width: 480px){ .addr-row{ grid-template-columns:1fr; } }
@@ -77,6 +65,7 @@
   <header>
     <div class="container">
       <div class="brand">
+        <!-- (Pode manter o onerror na logo/hero se quiser esconder quando não existir) -->
         <img id="logoImg" class="logo" src="" alt="Logo Italiana Sorvetes" onerror="this.style.display='none'">
         <div>
           <h1>🍨 Italiana Sorvetes</h1>
@@ -86,27 +75,22 @@
     </div>
   </header>
 
-  <!-- HERO / BANNER -->
   <section class="hero">
     <img id="heroImg" src="" alt="Banner Italiana Sorvetes" onerror="this.style.display='none'">
   </section>
 
   <main class="container">
     <div class="grid">
-      <!-- LISTA DE PRODUTOS -->
       <section>
         <div class="products" id="products"></div>
       </section>
 
-      <!-- CARRINHO -->
       <aside class="cart" id="cart">
         <h3>🛒 Carrinho de Compras <span class="chip">Frete a combinar</span></h3>
-        <div id="cartBody">
-          <p class="cart-empty">Seu carrinho está vazio.</p>
-        </div>
+        <div id="cartBody"><p class="cart-empty">Seu carrinho está vazio.</p></div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
 
-        <!-- CAMPOS DE ENTREGA -->
+        <!-- Campos de entrega -->
         <div class="addr" aria-label="Dados de entrega">
           <div>
             <label for="addrLogradouro">Endereço de entrega</label>
@@ -135,28 +119,29 @@
   </main>
 
   <script>
-    // >>>>>>>>>>>>>>>>>>> CONFIGURAÇÕES <<<<<<<<<<<<<<<<<<
-    const WHATSAPP_NUMBER = '5521964816872'; // Número solicitado
+    const WHATSAPP_NUMBER = '5521964816872';
     const CURRENCY = new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' });
 
-    // ⬇️ TROQUE pelos arquivos reais que já estão no servidor
+    /* ⚠️ Ajuste os caminhos AQUI.
+       Use caminhos RELATIVOS se seu site estiver em subpasta (./img/...).
+       Se seu site estiver na raiz do domínio, tanto ./img quanto /img funcionam,
+       mas prefira ./img para evitar 404 em subpastas. */
     const imagens = {
-      logo: '/img/logo.png',
-      hero: '/img/hero.jpg',
-      favicon: '/img/favicon.ico',
-      sorvete5: '/img/sorvete-5l.jpg',
-      sorvete10: '/img/sorvete-10l.jpg',
-      copos250: '/img/copos-250.jpg',
-      sorvete2: '/img/sorvete-2l.jpg',
-      copos500: '/img/copos-500.jpg',
-      picoleTrad: '/img/picole-trad.jpg',
-      picoleSkimo: '/img/picole-skimo.jpg',
-      acai2: '/img/acai-2l.jpg',
-      acai5: '/img/acai-5l.jpg',
-      acai10: '/img/acai-10l.jpg',
+      logo: './img/logo.png',
+      hero: './img/hero.jpg',
+      favicon: './img/favicon.ico',
+      sorvete5: './img/sorvete-5l.jpg',
+      sorvete10: './img/sorvete-10l.jpg',
+      copos250: './img/copos-250.jpg',
+      sorvete2: './img/sorvete-2l.jpg',
+      copos500: './img/copos-500.jpg',
+      picoleTrad: './img/picole-trad.jpg',
+      picoleSkimo: './img/picole-skimo.jpg',
+      acai2: './img/acai-2l.jpg',
+      acai5: './img/acai-5l.jpg',
+      acai10: './img/acai-10l.jpg',
     };
 
-    // Define favicon, logo e hero dinamicamente
     (function applyBrandImages(){
       const fav = document.getElementById('faviconLink');
       const logo = document.getElementById('logoImg');
@@ -166,24 +151,20 @@
       if (imagens.hero) hero.src = imagens.hero;
     })();
 
-    // Catálogo
     const saboresComuns = [
       'Napolitano','Flocos','Creme','Morango','Chocolate','Chocolate Trufado',
       'Passas ao rum','Torta alemã','Torta de limão','Maracujá','Ferrero Rocher',
       'Rafaello','Frutas Vermelhas','Leitinho Trufado'
     ];
-
     const saboresCopos = [
       'Abacaxi','Coco','Chocolate','Morango','Creme','Flocos','Sundae',
       'Maracujá','Milho verde','Napolitano','Galak','Passas ao rum'
     ];
-
     const saboresPicoleTrad = [
       'Abacate','Abacaxi','Abóbora com coco','Açaí','Amendoim','Banana com aveia','Blue ice','Brigadeiro',
       'Chocolate','Coco','Cupuaçu','Flocos','Goiaba','Graviola','Leite condensado','Limão',
       'Manga','Maracujá','Milho verde','Morango','Passas ao rum','Queijo','Tapioca','Tutti frutti','Uva'
     ];
-
     const saboresSkimo = ['Brigadeiro','Coco','Morango','Maracujá','Nata'];
     const saboresAcai = ['Banana','Morango','Natural'];
 
@@ -200,10 +181,8 @@
       { id:'acai10',     nome:'Açaí – 10 Litros',                   preco:90, sabores:saboresAcai },
     ];
 
-    // Estado do carrinho
     let carrinho = [];
 
-    // Renderização de produtos
     function renderProdutos(){
       const wrap = document.getElementById('products');
       wrap.innerHTML = '';
@@ -213,7 +192,10 @@
         const srcImg = imagens[prod.id] || '';
         card.innerHTML = `
           <div class="pimg-wrap">
-            <img class="pimg" src="${srcImg}" alt="4 class="title">${prod.nome}</h4>
+            ${srcImg ? `<{srcImg}`
+                     : `<span>Imagem não configurada</span>`}
+          </div>
+          <h4 class="title">${prod.nome}</h4>
           <div class="price">${CURRENCY.format(prod.preco)}</div>
 
           <label for="sabor-${prod.id}">Sabor</label>
@@ -234,7 +216,6 @@
         wrap.appendChild(card);
       });
 
-      // Listeners "Adicionar"
       wrap.querySelectorAll('[data-add]').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-add');
@@ -245,17 +226,13 @@
 
           const key = `${id}|${sabor}`;
           const existente = carrinho.find(i => i.key === key);
-          if(existente){
-            existente.qtd += qtd;
-          }else{
-            carrinho.push({ key, id, nome:prod.nome, sabor, preco:Number(prod.preco), qtd:Number(qtd) });
-          }
+          if(existente){ existente.qtd += qtd; }
+          else { carrinho.push({ key, id, nome:prod.nome, sabor, preco:Number(prod.preco), qtd:Number(qtd) }); }
           renderCarrinho();
         });
       });
     }
 
-    // Renderização do carrinho
     function renderCarrinho(){
       const body = document.getElementById('cartBody');
       const totalEl = document.getElementById('cartTotal');
@@ -295,7 +272,6 @@
       body.appendChild(list);
       totalEl.textContent = CURRENCY.format(total);
 
-      // listeners de remover/alterar qtd
       body.querySelectorAll('[data-rem]').forEach(btn => {
         btn.addEventListener('click', () => {
           const idx = parseInt(btn.getAttribute('data-rem'), 10);
@@ -314,30 +290,20 @@
       });
     }
 
-    // Validação do ponto de referência (obrigatório)
+    // valida referência obrigatória
     function validarReferencia(){
       const ref = document.getElementById('addrReferencia');
       const err = document.getElementById('refError');
       const ok = ref.value.trim().length > 0;
-      if(!ok){
-        ref.classList.add('is-invalid');
-        err.style.display = 'block';
-      }else{
-        ref.classList.remove('is-invalid');
-        err.style.display = 'none';
-      }
+      if(!ok){ ref.classList.add('is-invalid'); err.style.display = 'block'; }
+      else { ref.classList.remove('is-invalid'); err.style.display = 'none'; }
       return ok;
     }
-
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
-    // WhatsApp
     function finalizarWhatsApp(){
       if(carrinho.length === 0){ alert('Seu carrinho está vazio.'); return; }
-      if(!validarReferencia()){
-        document.getElementById('addrReferencia').focus();
-        return;
-      }
+      if(!validarReferencia()){ document.getElementById('addrReferencia').focus(); return; }
 
       const end = document.getElementById('addrLogradouro').value.trim();
       const num = document.getElementById('addrNumero').value.trim();
@@ -365,12 +331,14 @@
       window.open(url, '_blank');
     }
 
-    // Ações globais
     document.getElementById('checkout').addEventListener('click', finalizarWhatsApp);
     document.getElementById('clearCart').addEventListener('click', () => { carrinho = []; renderCarrinho(); });
 
-    // Inicializa
+    // Render
     renderProdutos();
     renderCarrinho();
+
+    // 👇 Log rápido para você checar os caminhos no console (F12)
+    console.table(imagens);
   </script>
 </body>
