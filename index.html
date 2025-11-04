@@ -1,4 +1,5 @@
-html_content = r'''<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
@@ -6,14 +7,25 @@ html_content = r'''<!DOCTYPE html>
   <title>Italiana Sorvetes</title>
   <style>
     :root{
-      --bg:#fffaf7; --card:#ffffff; --primary:#C62828; --primary-700:#8E1D1D;
-      --accent:#FFCC80; --text:#2b2b2b; --muted:#6b6b6b; --border:#eee;
+      /* Tema vermelho + verde */
+      --red:#C62828;          /* Primária vermelha */
+      --red-700:#8E1D1D;
+      --green:#2E7D32;        /* Ação/WhatsApp verde */
+      --green-700:#1B5E20;
+      --bg:#fffdfc;           /* Fundo claro levemente quente */
+      --card:#ffffff;
+      --text:#222; 
+      --muted:#666; 
+      --border:#eaeaea;
+      --chip:#FFF3F3;         /* chip/realce leve em vermelho */
     }
     *{box-sizing:border-box}
     body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; color:var(--text); background:linear-gradient(180deg,#fff,var(--bg)); }
-    header{ padding:24px 16px; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+    header{ padding:24px 16px; background:var(--card); border-bottom:3px solid var(--red); position:sticky; top:0; z-index:10; }
+    .brand{display:flex; align-items:center; gap:10px}
+    .brand-badge{width:10px; height:10px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px rgba(46,125,50,.15)}
     .container{max-width:1100px; margin:0 auto; padding:16px}
-    h1{margin:0 0 4px; font-size:1.75rem}
+    h1{margin:0 0 4px; font-size:1.8rem}
     .tagline{color:var(--muted); margin:0}
     .grid{ display:grid; grid-template-columns:1fr; gap:16px; margin-top:16px; }
     @media(min-width:960px){ .grid{ grid-template-columns: 2fr 1fr; } }
@@ -21,29 +33,38 @@ html_content = r'''<!DOCTYPE html>
     @media(min-width:720px){ .products{ grid-template-columns: repeat(2, 1fr); } }
     .card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
     .title{margin:0 0 8px; font-size:1.1rem}
-    .price{color:var(--primary); font-weight:700; margin-bottom:12px}
+    .price{color:var(--red); font-weight:800; margin-bottom:12px}
     label{display:block; font-size:.9rem; color:var(--muted); margin-bottom:6px}
     select, input[type="number"]{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:1rem; background:#fff; }
     .row{display:grid; grid-template-columns: 1fr 120px; gap:12px; margin-top:10px}
-    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; border:none; border-radius:10px; cursor:pointer; font-weight:600; }
-    .btn-primary{ background:var(--primary); color:#fff }
-    .btn-primary:hover{ background:var(--primary-700) }
-    .btn-ghost{ background:transparent; color:var(--primary); border:1px solid var(--primary); }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; border:none; border-radius:10px; cursor:pointer; font-weight:700; letter-spacing:.2px }
+    .btn-primary{ background:var(--red); color:#fff }
+    .btn-primary:hover{ background:var(--red-700) }
+    .btn-success{ background:var(--green); color:#fff }
+    .btn-success:hover{ background:var(--green-700) }
+    .btn-ghost{ background:transparent; color:var(--red); border:1px solid var(--red); }
     aside.cart{ position:sticky; top:88px; align-self:start; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
     .cart h3{margin:0 0 12px}
-    .cart-empty{color:var(--muted); font-size:.95rem}
+    .cart-empty{color:var(--muted); font-size:.95rem; background:var(--chip); padding:10px; border-radius:8px}
     .cart-items{display:flex; flex-direction:column; gap:10px; margin:10px 0}
     .cart-item{display:flex; justify-content:space-between; gap:10px; padding:10px; border:1px dashed var(--border); border-radius:8px; background:#fff}
     .cart-item small{color:var(--muted)}
-    .cart-total{display:flex; justify-content:space-between; font-weight:700; margin:12px 0}
+    .cart-total{display:flex; justify-content:space-between; font-weight:800; margin:12px 0}
+    .cart-total span:last-child{color:var(--green)}
     .footer-note{font-size:.9rem; color:var(--muted); margin-top:6px}
+    .chip{display:inline-block; font-size:.8rem; padding:4px 8px; background:var(--chip); color:var(--red); border-radius:999px; border:1px solid #f5dada; font-weight:700}
   </style>
 </head>
 <body>
   <header>
     <div class="container">
-      <h1>🍨 Italiana Sorvetes</h1>
-      <p class="tagline">Sabor e tradição italiana em cada colher</p>
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true"></div>
+        <div>
+          <h1>🍨 Italiana Sorvetes</h1>
+          <p class="tagline">Sabor e tradição italiana em cada colher</p>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -57,14 +78,14 @@ html_content = r'''<!DOCTYPE html>
 
       <!-- CARRINHO -->
       <aside class="cart" id="cart">
-        <h3>🛒 Carrinho de Compras</h3>
+        <h3>🛒 Carrinho de Compras <span class="chip">Frete a combinar</span></h3>
         <div id="cartBody">
           <p class="cart-empty">Seu carrinho está vazio.</p>
         </div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
         <div style="display:flex; gap:8px; flex-wrap:wrap">
           <button class="btn btn-ghost" id="clearCart">Limpar</button>
-          <button class="btn btn-primary" id="checkout">Finalizar pedido via WhatsApp</button>
+          <button class="btn btn-success" id="checkout">Finalizar pedido via WhatsApp</button>
         </div>
         <p class="footer-note">Confirme os sabores antes de finalizar 😉</p>
       </aside>
@@ -74,10 +95,10 @@ html_content = r'''<!DOCTYPE html>
 
   <script>
     // >>>>>>>>>>>>>>>>>>> CONFIGURAÇÕES <<<<<<<<<<<<<<<<<<
-    const WHATSAPP_NUMBER = '5521XXXXXXXXX'; // Substitua pelo seu número (DDI+DDD+NÚMERO)
+    const WHATSAPP_NUMBER = '5521964816872'; // Número solicitado
     const CURRENCY = new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' });
 
-    // Catálogo (a partir do seu texto)
+    // Catálogo (do seu texto original)
     const saboresComuns = [
       'Napolitano','Flocos','Creme','Morango','Chocolate','Chocolate Trufado',
       'Passas ao rum','Torta alemã','Torta de limão','Maracujá','Ferrero Rocher',
@@ -157,6 +178,7 @@ html_content = r'''<!DOCTYPE html>
           if(existente){
             existente.qtd += qtd;
           }else{
+            // preco garantido como número
             carrinho.push({ key, id, nome:prod.nome, sabor, preco:Number(prod.preco), qtd:Number(qtd) });
           }
           renderCarrinho();
@@ -252,8 +274,4 @@ html_content = r'''<!DOCTYPE html>
     renderCarrinho();
   </script>
 </body>
-</html>'''
-
-with open('index.html', 'w', encoding='utf-8') as f:
-    f.write(html_content)
-
+</html>
