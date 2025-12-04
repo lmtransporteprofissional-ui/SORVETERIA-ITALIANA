@@ -319,7 +319,7 @@ function validarNumero() {
     
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
-    function finalizarWhatsApp(){
+   function finalizarWhatsApp(){
   if(carrinho.length === 0){ 
     alert('Seu carrinho está vazio.'); 
     return; 
@@ -345,21 +345,27 @@ function validarNumero() {
   const ref = document.getElementById('addrReferencia').value.trim();
 
   const linhas = [];
-  linhas.push('*Pedido – Italiana Sorvetes*');
-  carrinho.forEach(item => {
+  linhas.push('🍨 *Pedido – Italiana Sorvetes*');
+  linhas.push('----------------------');
+  carrinho.forEach((item, idx) => {
     const sub = Number(item.preco) * Number(item.qtd);
-    linhas.push('• ' + item.nome + ' | Sabor: ' + item.sabor + ' | Qtd: ' + item.qtd + ' | Subtotal: ' + CURRENCY.format(sub));
+    linhas.push(
+      `🧊 *${item.nome}*` +
+      `\n   • Sabor: ${item.sabor}` +
+      `\n   • Qtd: ${item.qtd}` +
+      `\n   • Subtotal: ${CURRENCY.format(sub)}`
+    );
+    linhas.push('----------------------');
   });
   const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
+  linhas.push(`💰 *Total do pedido:* ${CURRENCY.format(total)}`);
   linhas.push('');
-  linhas.push('*Total:* ' + CURRENCY.format(total));
-  linhas.push('');
-  linhas.push('*Dados de entrega*');
-  linhas.push('Endereço: ' + (end || '-'));
-  linhas.push('Número: ' + (num || '-'));
-  linhas.push('Ponto de referência: ' + ref);
-  linhas.push('');
-  linhas.push('_Envie seu nome para finalizarmos._');
+  linhas.push('📦 *Dados de entrega*');
+  linhas.push(`   • Endereço: ${end}`);
+  linhas.push(`   • Número: ${num}`);
+  linhas.push(`   • Referência: ${ref}`);
+  linhas.push('----------------------');
+  linhas.push('📄 Por favor, envie seu *nome* para finalizarmos.');
 
   const msg = encodeURIComponent(linhas.join('\n'));
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
@@ -377,6 +383,7 @@ function validarNumero() {
     console.table(imagens);
   </script>
 </body>
+
 
 
 
