@@ -300,11 +300,35 @@
       else   { ref.classList.remove('is-invalid'); err.style.display = 'none'; }
       return ok;
     }
+    function validarEndereco() {
+  const endereco = document.getElementById('addrLogradouro');
+  const err = document.getElementById('enderecoError');
+  const ok = endereco.value.trim().length > 0;
+  if(!ok){ endereco.classList.add('is-invalid'); err.style.display = 'block'; }
+  else   { endereco.classList.remove('is-invalid'); err.style.display = 'none'; }
+  return ok;
+}
+function validarNumero() {
+  const numero = document.getElementById('addrNumero');
+  const err = document.getElementById('numeroError');
+  const ok = numero.value.trim().length > 0;
+  if(!ok){ numero.classList.add('is-invalid'); err.style.display = 'block'; }
+  else   { numero.classList.remove('is-invalid'); err.style.display = 'none'; }
+  return ok;
+}
+    
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
     function finalizarWhatsApp(){
-      if(carrinho.length === 0){ alert('Seu carrinho está vazio.'); return; }
-      if(!validarReferencia()){ document.getElementById('addrReferencia').focus(); return; }
+  if(carrinho.length === 0){ alert('Seu carrinho está vazio.'); return; }
+  const okEndereco = validarEndereco();
+  const okNumero = validarNumero();
+  const okRef = validarReferencia();
+  if(!okEndereco) { document.getElementById('addrLogradouro').focus(); return; }
+  if(!okNumero) { document.getElementById('addrNumero').focus(); return; }
+  if(!okRef){ document.getElementById('addrReferencia').focus(); return; }
+  // ... resto igual
+}
 
       const end = document.getElementById('addrLogradouro').value.trim();
       const num = document.getElementById('addrNumero').value.trim();
@@ -343,6 +367,7 @@
     console.table(imagens);
   </script>
 </body>
+
 
 
 
