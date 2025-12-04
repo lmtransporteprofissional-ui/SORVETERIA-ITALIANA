@@ -320,41 +320,51 @@ function validarNumero() {
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
     function finalizarWhatsApp(){
-  if(carrinho.length === 0){ alert('Seu carrinho está vazio.'); return; }
+  if(carrinho.length === 0){ 
+    alert('Seu carrinho está vazio.'); 
+    return; 
+  }
   const okEndereco = validarEndereco();
   const okNumero = validarNumero();
   const okRef = validarReferencia();
-  if(!okEndereco) { document.getElementById('addrLogradouro').focus(); return; }
-  if(!okNumero) { document.getElementById('addrNumero').focus(); return; }
-  if(!okRef){ document.getElementById('addrReferencia').focus(); return; }
-  // ... resto igual
+  if(!okEndereco) { 
+    document.getElementById('addrLogradouro').focus(); 
+    return; 
+  }
+  if(!okNumero) { 
+    document.getElementById('addrNumero').focus(); 
+    return; 
+  }
+  if(!okRef){ 
+    document.getElementById('addrReferencia').focus(); 
+    return; 
+  }
+
+  const end = document.getElementById('addrLogradouro').value.trim();
+  const num = document.getElementById('addrNumero').value.trim();
+  const ref = document.getElementById('addrReferencia').value.trim();
+
+  const linhas = [];
+  linhas.push('*Pedido – Italiana Sorvetes*');
+  carrinho.forEach(item => {
+    const sub = Number(item.preco) * Number(item.qtd);
+    linhas.push('• ' + item.nome + ' | Sabor: ' + item.sabor + ' | Qtd: ' + item.qtd + ' | Subtotal: ' + CURRENCY.format(sub));
+  });
+  const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
+  linhas.push('');
+  linhas.push('*Total:* ' + CURRENCY.format(total));
+  linhas.push('');
+  linhas.push('*Dados de entrega*');
+  linhas.push('Endereço: ' + (end || '-'));
+  linhas.push('Número: ' + (num || '-'));
+  linhas.push('Ponto de referência: ' + ref);
+  linhas.push('');
+  linhas.push('_Envie seu nome para finalizarmos._');
+
+  const msg = encodeURIComponent(linhas.join('\n'));
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+  window.open(url, '_blank');
 }
-
-      const end = document.getElementById('addrLogradouro').value.trim();
-      const num = document.getElementById('addrNumero').value.trim();
-      const ref = document.getElementById('addrReferencia').value.trim();
-
-      const linhas = [];
-      linhas.push('*Pedido – Italiana Sorvetes*');
-      carrinho.forEach(item => {
-        const sub = Number(item.preco) * Number(item.qtd);
-        linhas.push('• ' + item.nome + ' | Sabor: ' + item.sabor + ' | Qtd: ' + item.qtd + ' | Subtotal: ' + CURRENCY.format(sub));
-      });
-      const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
-      linhas.push('');
-      linhas.push('*Total:* ' + CURRENCY.format(total));
-      linhas.push('');
-      linhas.push('*Dados de entrega*');
-      linhas.push('Endereço: ' + (end || '-'));
-      linhas.push('Número: ' + (num || '-'));
-      linhas.push('Ponto de referência: ' + ref);
-      linhas.push('');
-      linhas.push('_Envie seu nome para finalizarmos._');
-
-      const msg = encodeURIComponent(linhas.join('\n'));
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-      window.open(url, '_blank');
-    }
 
     document.getElementById('checkout').addEventListener('click', finalizarWhatsApp);
     document.getElementById('clearCart').addEventListener('click', () => { carrinho = []; renderCarrinho(); });
@@ -367,6 +377,7 @@ function validarNumero() {
     console.table(imagens);
   </script>
 </body>
+
 
 
 
