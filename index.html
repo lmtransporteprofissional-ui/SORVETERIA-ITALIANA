@@ -90,16 +90,17 @@
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
 
         <!-- Dados de entrega -->
-        <div class="addr" aria-label="Dados de entrega">
-          <div>
-            <label for="addrLogradouro">Endereço de entrega</label>
-            <input type="text" id="addrLogradouro" placeholder="Rua, avenida, lote, complemento...">
-          </div>
-          <div class="addr-row">
-            <div>
-              <label for="addrNumero">Número</label>
-              <input type="text" id="addrNumero" placeholder="Ex.: 123">
-            </div>
+        <div>
+  <label for="addrLogradouro">Endereço de entrega <span class="req">*</span></label>
+  <input type="text" id="addrLogradouro" placeholder="Rua, avenida, lote, complemento..." aria-required="true">
+  <div id="enderecoError" class="error">Endereço de entrega é obrigatório.</div>
+</div>
+<div class="addr-row">
+  <div>
+    <label for="addrNumero">Número <span class="req">*</span></label>
+    <input type="text" id="addrNumero" placeholder="Ex.: 123" aria-required="true">
+    <div id="numeroError" class="error">Número é obrigatório.</div>
+     </div>
             <div>
               <label for="addrReferencia">Ponto de referência <span class="req">*</span></label>
               <input type="text" id="addrReferencia" placeholder="Ex.: Próximo ao posto X ou padaria Y" aria-required="true">
@@ -342,6 +343,7 @@
     console.table(imagens);
   </script>
 </body>
+
 
 
 
