@@ -355,6 +355,7 @@ function validarNumero() {
       `\n   • Qtd: ${item.qtd}` +
       `\n   • Subtotal: ${CURRENCY.format(sub)}`
     );
+    linhas.push('');
     linhas.push('----------------------');
   });
   const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
@@ -383,6 +384,7 @@ function validarNumero() {
     console.table(imagens);
   </script>
 </body>
+
 
 
 
