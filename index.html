@@ -89,8 +89,13 @@
         <div id="cartBody"><p class="cart-empty">Seu carrinho está vazio.</p></div>
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
 
-        <!-- Dados de entrega -->
-        <div>
+        <!-- Nome do Cliente -->
+<div>
+  <label for="clienteNome">Nome do Cliente <span class="req">*</span></label>
+  <input type="text" id="clienteNome" placeholder="Digite seu nome completo" aria-required="true">
+  <div id="clienteNomeError" class="error">Nome do cliente é obrigatório.</div>
+</div>
+<div>
   <label for="addrLogradouro">Endereço de entrega <span class="req">*</span></label>
   <input type="text" id="addrLogradouro" placeholder="Rua, avenida, lote, complemento..." aria-required="true">
   <div id="enderecoError" class="error">Endereço de entrega é obrigatório.</div>
@@ -319,14 +324,19 @@ function validarNumero() {
     
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
-   function finalizarWhatsApp(){
+  function finalizarWhatsApp(){
   if(carrinho.length === 0){ 
     alert('Seu carrinho está vazio.'); 
     return; 
   }
+  const okNome = validarNomeCliente();
   const okEndereco = validarEndereco();
   const okNumero = validarNumero();
   const okRef = validarReferencia();
+  if(!okNome) {
+    document.getElementById('clienteNome').focus();
+    return;
+  }
   if(!okEndereco) { 
     document.getElementById('addrLogradouro').focus(); 
     return; 
@@ -340,6 +350,7 @@ function validarNumero() {
     return; 
   }
 
+  const nomeCliente = document.getElementById('clienteNome').value.trim();
   const end = document.getElementById('addrLogradouro').value.trim();
   const num = document.getElementById('addrNumero').value.trim();
   const ref = document.getElementById('addrReferencia').value.trim();
@@ -354,16 +365,13 @@ function validarNumero() {
   const linhas = [];
   linhas.push('🍨 *Pedido – Italiana Sorvetes*');
   linhas.push('----------------------');
-
-  // Para cada tipo/produto
   Object.keys(agrupados).forEach(nome => {
     linhas.push(`*${nome}*`);
     agrupados[nome].forEach(item => {
       linhas.push(`- ${item.sabor}: ${item.qtd} cx`);
     });
-    linhas.push(''); // Linha extra entre tipos
+    linhas.push('');
   });
-
   linhas.push('----------------------');
   const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
   linhas.push(`💰 *Total do pedido:* ${CURRENCY.format(total)}`);
@@ -373,7 +381,7 @@ function validarNumero() {
   linhas.push(`   • Número: ${num}`);
   linhas.push(`   • Referência: ${ref}`);
   linhas.push('----------------------');
-  linhas.push('📄 Por favor, envie seu *nome* para finalizarmos.');
+  linhas.push(`🙋 *Cliente*: ${nomeCliente}`);
 
   const msg = encodeURIComponent(linhas.join('\n'));
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
@@ -390,6 +398,7 @@ function validarNumero() {
     console.table(imagens);
   </script>
 </body>
+
 
 
 
