@@ -321,6 +321,20 @@ function validarNumero() {
   else   { numero.classList.remove('is-invalid'); err.style.display = 'none'; }
   return ok;
 }
+    function validarNomeCliente() {
+  const nome = document.getElementById('clienteNome');
+  const err = document.getElementById('clienteNomeError');
+  const ok = nome.value.trim().length > 0;
+  if(!ok){
+    nome.classList.add('is-invalid');
+    err.style.display = 'block';
+  } else {
+    nome.classList.remove('is-invalid');
+    err.style.display = 'none';
+  }
+  return ok;
+}
+document.getElementById('clienteNome').addEventListener('input', validarNomeCliente);
     
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
@@ -398,6 +412,7 @@ function validarNumero() {
     console.table(imagens);
   </script>
 </body>
+
 
 
 
