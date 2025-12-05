@@ -344,20 +344,27 @@ function validarNumero() {
   const num = document.getElementById('addrNumero').value.trim();
   const ref = document.getElementById('addrReferencia').value.trim();
 
+  // Agrupa por nome de produto
+  const agrupados = {};
+  carrinho.forEach(item => {
+    if(!agrupados[item.nome]) agrupados[item.nome] = [];
+    agrupados[item.nome].push(item);
+  });
+
   const linhas = [];
   linhas.push('🍨 *Pedido – Italiana Sorvetes*');
   linhas.push('----------------------');
-  carrinho.forEach((item, idx) => {
-    const sub = Number(item.preco) * Number(item.qtd);
-    linhas.push(
-      `🧊 *${item.nome}*` +
-      `\n   • Sabor: ${item.sabor}` +
-      `\n   • Qtd: ${item.qtd}` +
-      `\n   • Subtotal: ${CURRENCY.format(sub)}`
-    );
-    linhas.push('');
-    linhas.push('----------------------');
+
+  // Para cada tipo/produto
+  Object.keys(agrupados).forEach(nome => {
+    linhas.push(`*${nome}*`);
+    agrupados[nome].forEach(item => {
+      linhas.push(`- ${item.sabor}: ${item.qtd} cx`);
+    });
+    linhas.push(''); // Linha extra entre tipos
   });
+
+  linhas.push('----------------------');
   const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
   linhas.push(`💰 *Total do pedido:* ${CURRENCY.format(total)}`);
   linhas.push('');
@@ -372,7 +379,6 @@ function validarNumero() {
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
   window.open(url, '_blank');
 }
-
     document.getElementById('checkout').addEventListener('click', finalizarWhatsApp);
     document.getElementById('clearCart').addEventListener('click', () => { carrinho = []; renderCarrinho(); });
 
@@ -384,6 +390,7 @@ function validarNumero() {
     console.table(imagens);
   </script>
 </body>
+
 
 
 
