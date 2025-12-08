@@ -28,7 +28,7 @@
     .products{ display:grid; grid-template-columns:1fr; gap:16px; }
     @media(min-width:720px){ .products{ grid-template-columns: repeat(2, 1fr); } }
     .card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-    .pimg-wrap{width:100%; aspect-ratio:16/9; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px; display:flex; align-items:center; justify-content:center; color:#999; font-size:.9rem}
+    .pimg-wrap{width:100%; aspect-ratio:16/9; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px; display:flex; align-items:center; justify-content:center;}
     .pimg{width:100%; height:100%; object-fit:cover; display:block}
     .title{margin:0 0 6px; font-size:1.1rem}
     .price{color:var(--red); font-weight:800; margin-bottom:10px}
@@ -90,27 +90,26 @@
         <div class="cart-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
 
         <!-- Nome do Cliente -->
-<div>
-  <label for="clienteNome">Nome do Cliente <span class="req">*</span></label>
-  <input type="text" id="clienteNome" placeholder="Digite seu nome completo" aria-required="true">
-  <div id="clienteNomeError" class="error">Nome do cliente é obrigatório.</div>
-</div>
-<div>
-  <label for="addrLogradouro">Endereço de entrega <span class="req">*</span></label>
-  <input type="text" id="addrLogradouro" placeholder="Rua, avenida, lote, complemento..." aria-required="true">
-  <div id="enderecoError" class="error">Endereço de entrega é obrigatório.</div>
-</div>
-<div class="addr-row">
-  <div>
-    <label for="addrNumero">Número <span class="req">*</span></label>
-    <input type="text" id="addrNumero" placeholder="Ex.: 123" aria-required="true">
-    <div id="numeroError" class="error">Número é obrigatório.</div>
-     </div>
-            <div>
-              <label for="addrReferencia">Ponto de referência <span class="req">*</span></label>
-              <input type="text" id="addrReferencia" placeholder="Ex.: Próximo ao posto X ou padaria Y" aria-required="true">
-              <div id="refError" class="error">Ponto de referência é obrigatório.</div>
-            </div>
+        <div>
+          <label for="clienteNome">Nome do Cliente <span class="req">*</span></label>
+          <input type="text" id="clienteNome" placeholder="Digite seu nome completo" aria-required="true">
+          <div id="clienteNomeError" class="error">Nome do cliente é obrigatório.</div>
+        </div>
+        <div>
+          <label for="addrLogradouro">Endereço de entrega <span class="req">*</span></label>
+          <input type="text" id="addrLogradouro" placeholder="Rua, avenida, lote, complemento..." aria-required="true">
+          <div id="enderecoError" class="error">Endereço de entrega é obrigatório.</div>
+        </div>
+        <div class="addr-row">
+          <div>
+            <label for="addrNumero">Número <span class="req">*</span></label>
+            <input type="text" id="addrNumero" placeholder="Ex.: 123" aria-required="true">
+            <div id="numeroError" class="error">Número é obrigatório.</div>
+          </div>
+          <div>
+            <label for="addrReferencia">Ponto de referência <span class="req">*</span></label>
+            <input type="text" id="addrReferencia" placeholder="Ex.: Próximo ao posto X ou padaria Y" aria-required="true">
+            <div id="refError" class="error">Ponto de referência é obrigatório.</div>
           </div>
         </div>
 
@@ -127,7 +126,7 @@
     const WHATSAPP_NUMBER = '5521964816872';
     const CURRENCY = new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL' });
 
-    // 🔁 TROQUE pelos nomes reais dos arquivos no seu servidor (use caminho relativo ./)
+    // ---- IMAGENS ----
     const imagens = {
       logo: './logo.png',
       hero: './hero.jpg',
@@ -142,6 +141,7 @@
       acai2: './acai-2l.png',
       acai5: './acai-5l.png',
       acai10: './acai-10l.png',
+      copos250acai: './Designer (2).png', // Açaí copo 250ml, conforme pedido
     };
 
     // favicon, logo, hero
@@ -172,6 +172,7 @@
     const saboresAcai = ['Banana','Morango','Natural'];
     const saboresAcai2 = ['Banana','Morango'];
 
+    // ---- CATÁLOGO ----
     const catalogo = [
       { id:'sorvete5',   nome:'Sorvete 5 Litros',                  preco:45, sabores:saboresComuns },
       { id:'sorvete10',  nome:'Sorvete 10 Litros',                 preco:80, sabores:saboresComuns },
@@ -183,11 +184,12 @@
       { id:'acai2',      nome:'Açaí – 2 Litros',                    preco:25, sabores:saboresAcai2 },
       { id:'acai5',      nome:'Açaí – 5 Litros',                    preco:50, sabores:saboresAcai },
       { id:'acai10',     nome:'Açaí – 10 Litros',                   preco:90, sabores:saboresAcai },
+      { id:'copos250acai', nome:'Açaí em Copos – 250ml (12 un.)',   preco:36, sabores:saboresAcai }, // NOVO PRODUTO
     ];
 
     let carrinho = [];
 
-    // ⚙️ RENDER DE PRODUTOS (sem {srcImg}, usando concatenação segura)
+    // ---- RENDERIZAÇÃO DE PRODUTOS ----
     function renderProdutos(){
       const wrap = document.getElementById('products');
       wrap.innerHTML = '';
@@ -306,101 +308,101 @@
       return ok;
     }
     function validarEndereco() {
-  const endereco = document.getElementById('addrLogradouro');
-  const err = document.getElementById('enderecoError');
-  const ok = endereco.value.trim().length > 0;
-  if(!ok){ endereco.classList.add('is-invalid'); err.style.display = 'block'; }
-  else   { endereco.classList.remove('is-invalid'); err.style.display = 'none'; }
-  return ok;
-}
-function validarNumero() {
-  const numero = document.getElementById('addrNumero');
-  const err = document.getElementById('numeroError');
-  const ok = numero.value.trim().length > 0;
-  if(!ok){ numero.classList.add('is-invalid'); err.style.display = 'block'; }
-  else   { numero.classList.remove('is-invalid'); err.style.display = 'none'; }
-  return ok;
-}
+      const endereco = document.getElementById('addrLogradouro');
+      const err = document.getElementById('enderecoError');
+      const ok = endereco.value.trim().length > 0;
+      if(!ok){ endereco.classList.add('is-invalid'); err.style.display = 'block'; }
+      else   { endereco.classList.remove('is-invalid'); err.style.display = 'none'; }
+      return ok;
+    }
+    function validarNumero() {
+      const numero = document.getElementById('addrNumero');
+      const err = document.getElementById('numeroError');
+      const ok = numero.value.trim().length > 0;
+      if(!ok){ numero.classList.add('is-invalid'); err.style.display = 'block'; }
+      else   { numero.classList.remove('is-invalid'); err.style.display = 'none'; }
+      return ok;
+    }
     function validarNomeCliente() {
-  const nome = document.getElementById('clienteNome');
-  const err = document.getElementById('clienteNomeError');
-  const ok = nome.value.trim().length > 0;
-  if(!ok){
-    nome.classList.add('is-invalid');
-    err.style.display = 'block';
-  } else {
-    nome.classList.remove('is-invalid');
-    err.style.display = 'none';
-  }
-  return ok;
-}
-document.getElementById('clienteNome').addEventListener('input', validarNomeCliente);
-    
+      const nome = document.getElementById('clienteNome');
+      const err = document.getElementById('clienteNomeError');
+      const ok = nome.value.trim().length > 0;
+      if(!ok){
+        nome.classList.add('is-invalid');
+        err.style.display = 'block';
+      } else {
+        nome.classList.remove('is-invalid');
+        err.style.display = 'none';
+      }
+      return ok;
+    }
+    document.getElementById('clienteNome').addEventListener('input', validarNomeCliente);
+
     document.getElementById('addrReferencia').addEventListener('input', validarReferencia);
 
-  function finalizarWhatsApp(){
-  if(carrinho.length === 0){ 
-    alert('Seu carrinho está vazio.'); 
-    return; 
-  }
-  const okNome = validarNomeCliente();
-  const okEndereco = validarEndereco();
-  const okNumero = validarNumero();
-  const okRef = validarReferencia();
-  if(!okNome) {
-    document.getElementById('clienteNome').focus();
-    return;
-  }
-  if(!okEndereco) { 
-    document.getElementById('addrLogradouro').focus(); 
-    return; 
-  }
-  if(!okNumero) { 
-    document.getElementById('addrNumero').focus(); 
-    return; 
-  }
-  if(!okRef){ 
-    document.getElementById('addrReferencia').focus(); 
-    return; 
-  }
+    function finalizarWhatsApp(){
+      if(carrinho.length === 0){
+        alert('Seu carrinho está vazio.');
+        return;
+      }
+      const okNome = validarNomeCliente();
+      const okEndereco = validarEndereco();
+      const okNumero = validarNumero();
+      const okRef = validarReferencia();
+      if(!okNome) {
+        document.getElementById('clienteNome').focus();
+        return;
+      }
+      if(!okEndereco) {
+        document.getElementById('addrLogradouro').focus();
+        return;
+      }
+      if(!okNumero) {
+        document.getElementById('addrNumero').focus();
+        return;
+      }
+      if(!okRef){
+        document.getElementById('addrReferencia').focus();
+        return;
+      }
 
-  const nomeCliente = document.getElementById('clienteNome').value.trim();
-  const end = document.getElementById('addrLogradouro').value.trim();
-  const num = document.getElementById('addrNumero').value.trim();
-  const ref = document.getElementById('addrReferencia').value.trim();
+      const nomeCliente = document.getElementById('clienteNome').value.trim();
+      const end = document.getElementById('addrLogradouro').value.trim();
+      const num = document.getElementById('addrNumero').value.trim();
+      const ref = document.getElementById('addrReferencia').value.trim();
 
-  // Agrupa por nome de produto
-  const agrupados = {};
-  carrinho.forEach(item => {
-    if(!agrupados[item.nome]) agrupados[item.nome] = [];
-    agrupados[item.nome].push(item);
-  });
+      // Agrupa por nome de produto
+      const agrupados = {};
+      carrinho.forEach(item => {
+        if(!agrupados[item.nome]) agrupados[item.nome] = [];
+        agrupados[item.nome].push(item);
+      });
 
-  const linhas = [];
-  linhas.push('🍨 *Pedido – Italiana Sorvetes*');
-  linhas.push('----------------------');
-  Object.keys(agrupados).forEach(nome => {
-    linhas.push(`*${nome}*`);
-    agrupados[nome].forEach(item => {
-      linhas.push(`- ${item.sabor}: ${item.qtd} cx`);
-    });
-    linhas.push('');
-  });
-  linhas.push('----------------------');
-  const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
-  linhas.push(`💰 *Total do pedido:* ${CURRENCY.format(total)}`);
-  linhas.push('');
-  linhas.push('📦 *Dados de entrega*');
-  linhas.push(`   • Endereço: ${end}`);
-  linhas.push(`   • Número: ${num}`);
-  linhas.push(`   • Referência: ${ref}`);
-  linhas.push('----------------------');
-  linhas.push(`🙋 *Cliente*: ${nomeCliente}`);
+      const linhas = [];
+      linhas.push('🍨 *Pedido – Italiana Sorvetes*');
+      linhas.push('----------------------');
+      Object.keys(agrupados).forEach(nome => {
+        linhas.push(`*${nome}*`);
+        agrupados[nome].forEach(item => {
+          linhas.push(`- ${item.sabor}: ${item.qtd} cx`);
+        });
+        linhas.push('');
+      });
+      linhas.push('----------------------');
+      const total = carrinho.reduce((acc, i) => acc + Number(i.preco) * Number(i.qtd), 0);
+      linhas.push(`💰 *Total do pedido:* ${CURRENCY.format(total)}`);
+      linhas.push('');
+      linhas.push('📦 *Dados de entrega*');
+      linhas.push(`   • Endereço: ${end}`);
+      linhas.push(`   • Número: ${num}`);
+      linhas.push(`   • Referência: ${ref}`);
+      linhas.push('----------------------');
+      linhas.push(`🙋 *Cliente*: ${nomeCliente}`);
 
-  const msg = encodeURIComponent(linhas.join('\n'));
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-  window.open(url, '_blank');
-}
+      const msg = encodeURIComponent(linhas.join('\n'));
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+      window.open(url, '_blank');
+    }
     document.getElementById('checkout').addEventListener('click', finalizarWhatsApp);
     document.getElementById('clearCart').addEventListener('click', () => { carrinho = []; renderCarrinho(); });
 
@@ -412,18 +414,4 @@ document.getElementById('clienteNome').addEventListener('input', validarNomeClie
     console.table(imagens);
   </script>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>
